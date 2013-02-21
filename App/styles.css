@@ -1,0 +1,400 @@
+@charset "UTF-8";
+/* CSS Document */
+html{
+	height:100%;
+	width:100%;
+	background-color:#000;
+/*	background-position:center 0px;*/
+/*	background-size:100%;*/
+	background-image: url('images/backgrounds/vertical_cloth.png');
+	background-repeat: repeat;
+}
+
+*{
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+body{
+	font-family: 'Raleway', Arial, Helvetica, sans-serif;
+	font-size:12pt;
+	margin:0px;
+	background-attachment: scroll;
+	background-repeat: repeat-y;
+	background-color: rgba(0,0,0,.5);
+	width:100%;
+	height:100%;
+}
+
+nav{
+	background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0px 2px 6px #000000;
+    float: left;
+    height: auto;
+    position: fixed;
+    width: 100%;
+    display: none;
+}
+
+nav a{
+	color: white;
+    cursor: pointer;
+    font-size: 29pt;
+    margin-left: 2%;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.21);
+}
+
+.view{
+	float: left;
+	position: fixed;
+	width: 100%;
+	/*height: -moz-calc(100% - 50px);
+	height: -webkit-calc(100% - 50px);
+	height: calc(100% - 50px);*/
+	height: 100%;
+/*	margin-top: 10%;*/
+/*	margin-top: 50px;*/
+/*	background-color: red;*/
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
+	-webkit-transform: translateZ(0);
+	-webkit-perspective: 1000;
+/*	-webkit-backface-visibility: hidden;*/
+/*	background-color: blue;*/
+}
+
+.view li{
+	background-color: rgba(255, 255, 255, 0.19);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+/*    box-shadow: 0 1px 1px rgba(255, 255, 255, 0.08) inset, 0 1px 1px #000000;*/
+    color: white;
+    cursor: pointer;
+    font-size: 10pt;
+    list-style-type: none;
+    padding: 9px 0 9px 2%;
+    text-decoration: none;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    width: 98%;
+	
+	-webkit-overflow-scrolling: touch;
+	-webkit-transform: translateZ(0);
+	-webkit-perspective: 1000;
+	
+}
+
+.view li:after{
+	color: rgba(255, 255, 255, 0.3);
+    content: ">";
+    font-weight: bold;
+    position: fixed;
+    right: 2%;
+}
+
+.view li > *{
+	-webkit-overflow-scrolling: touch;
+	-webkit-transform: translateZ(0);
+	-webkit-perspective: 1000;
+}
+
+.view li:nth-child(odd){
+	background-color: rgba(255, 255, 255, 0.15);
+}
+
+.slideOffToLeft{
+	position: fixed;
+	left: -100% !important;
+	top: 0;
+	
+	animation: slideOffToLeftAnimation 0.5s;
+	-moz-animation: slideOffToLeftAnimation 0.5s; /* Firefox */
+	-webkit-animation: slideOffToLeftAnimation 0.5s; /* Safari and Chrome */
+	-o-animation: slideOffToLeftAnimation 0.5s; /* Opera */
+	
+}
+
+@keyframes slideOffToLeftAnimation{
+	from {left: 0;}
+	to {left: -100%;}
+}
+
+@-moz-keyframes slideOffToLeftAnimation{
+	from {left: 0;}
+	to {left: -100%;}
+}
+	
+@-webkit-keyframes slideOffToLeftAnimation{
+	from {left: 0;}
+	to {left: -100%;}
+}
+	
+@-o-keyframes slideOffToLeftAnimation{
+	from {left: 0;}
+	to {left: -100%;}
+}
+
+.slideOnFromLeft{
+	position: fixed;
+	left: 0% !important;
+	top: 0;
+	
+	animation: slideOnFromLeftAnimation 0.5s;
+	-moz-animation: slideOnFromLeftAnimation 0.5s; /* Firefox */
+	-webkit-animation: slideOnFromLeftAnimation 0.5s; /* Safari and Chrome */
+	-o-animation: slideOnFromLeftAnimation 0.5s; /* Opera */
+	
+}
+
+@keyframes slideOnFromLeftAnimation{
+	from {left: -100%;}
+	to {left: 0%;}
+}
+
+@-moz-keyframes slideOnFromLeftAnimation{
+	from {left: -100%;}
+	to {left: 0%;}
+}
+	
+@-webkit-keyframes slideOnFromLeftAnimation{
+	from {left: -100%;}
+	to {left: 0%;}
+}
+	
+@-o-keyframes slideOnFromLeftAnimation{
+	from {left: -100%;}
+	to {left: 0%;}
+}
+
+
+.slideOnFromRight{
+	position: fixed;
+	left: 0% !important;
+	top: 0;
+	
+	animation: slideOnFromRightAnimation 0.5s;
+	-moz-animation: slideOnFromRightAnimation 0.5s; /* Firefox */
+	-webkit-animation: slideOnFromRightAnimation 0.5s; /* Safari and Chrome */
+	-o-animation: slideOnFromRightAnimation 0.5s; /* Opera */
+	
+}
+
+@keyframes slideOnFromRightAnimation{
+	from {left: 100%;}
+	to {left: 0%;}
+}
+
+@-moz-keyframes slideOnFromRightAnimation{
+	from {left: 100%;}
+	to {left: 0%;}
+}
+	
+@-webkit-keyframes slideOnFromRightAnimation{
+	from {left: 100%;}
+	to {left: 0%;}
+}
+	
+@-o-keyframes slideOnFromRightAnimation{
+	from {left: 100%;}
+	to {left: 0%;}
+}
+
+.slideOffToRight{
+	position: fixed !important;
+	left: 100% !important;
+	top: 0;
+	
+	animation: slideOffToRightAnimation 0.5s;
+	-moz-animation: slideOffToRightAnimation 0.5s; /* Firefox */
+	-webkit-animation: slideOffToRightAnimation 0.5s; /* Safari and Chrome */
+	-o-animation: slideOffToRightAnimation 0.5s; /* Opera */
+	
+}
+
+@keyframes slideOffToRightAnimation{
+	from {left: 0%;}
+	to {left: 100%;}
+}
+
+@-moz-keyframes slideOffToRightAnimation{
+	from {left: 0%;}
+	to {left: 100%;}
+}
+	
+@-webkit-keyframes slideOffToRightAnimation{
+	from {left: 0%;}
+	to {left: 100%;}
+}
+	
+@-o-keyframes slideOffToRightAnimation{
+	from {left: 0%;}
+	to {left: 100%;}
+}
+
+#nowOnScreen{
+	display: none;
+	background-color: rgba(59,59,59,1);
+/*	margin-top: 44px;*/
+	height: 100%;
+	z-index: 1000;
+/*	box-shadow: -3px 3px 5px #000;*/
+}
+
+#goToNowPlaying{
+	display: none;
+}
+
+#goToNowPlaying i{
+	position: fixed;
+	right: 2%;
+	top: 2%;
+	font-size: 20pt;
+}
+
+#playPauseToggle{
+	width: 200px;
+	height: 200px;
+/*	border: 1px solid #333;*/
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin: -100px 0 0 -100px;
+	text-align: center;
+	z-index: 400000;
+}
+
+#playBtn{
+	display: none;
+}
+
+.toggle{
+	position: relative;
+	background-color: rgba(0,0,0,0.1);
+	border-radius: 5px;
+	border: 1px solid rgba(255,255,255,.1);
+}
+
+#progressBar{
+	background-color: rgba(0,0,0,.5);
+	width: 10px;
+	height: 100%;
+	margin-left: -5px;
+	position: fixed;
+	transition: width 1s linear;
+	-moz-transition: left 1s linear; /* Firefox 4 */
+	-webkit-transition: left 1s linear; /* Safari and Chrome */
+	-o-transition: left 1s linear; /* Opera */
+}
+
+.explode{
+	animation: explodeAnimation 0.2s;
+	-moz-animation: explodeAnimation 0.2s; /* Firefox */
+	-webkit-animation: explodeAnimation 0.2s; /* Safari and Chrome */
+	-o-animation: explodeAnimation 0.2s; /* Opera */
+}
+
+#thisTrack{
+/*	bottom: 0;*/
+	font-weight: 200;
+	text-align: center;
+	color: white;
+	margin-top: 3px;
+	position: relative;
+	font-size: 18pt;
+}
+
+@keyframes explodeAnimation{
+	from {width: 150px; opacity: 1;}
+	to {width: 200px; opacity: 0;}
+}
+
+@-moz-keyframes explodeAnimation{
+	from {width: 150px; opacity: 1;}
+	to {width: 200px; opacity: 0;}
+}
+	
+@-webkit-keyframes explodeAnimation{
+	from {width: 150px; opacity: 1;}
+	to {width: 200px; opacity: 0;}
+}
+	
+@-o-keyframes explodeAnimation{
+	from {width: 150px; opacity: 1;}
+	to {width: 200px; opacity: 0;}
+}
+
+#loading{
+	background-color: rgba(0, 0, 0, 0.55);
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 1px 1px rgba(255, 255, 255, 0.42) inset, 0 1px 8px rgba(0, 0, 0, 0.56);
+    color: white;
+    display: block;
+    height: 50px;
+    left: 50%;
+    margin: -25px 0 0 -25px;
+    position: fixed;
+    text-align: center;
+    top: 50%;
+    width: 50px;
+    z-index: 230000;
+}
+
+#loading i{
+	width: 100%;
+	font-size: 30pt;
+	margin-top: 4px;
+}
+
+#nowPlayingHeader{
+	width: 100%;
+	height: 242px;
+	background-image: url('images/overlay.png'), url('http://sean.mtracey.org/stuff/tonlist/temp/cover.jpeg');
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-position: 50% 50%;
+}
+
+#albumCover{
+	width: 135px;
+	height: 135px;
+	border: 3px solid #fff;
+	box-shadow: 0px 18px 30px rgba(0,0,0,.75);
+	background-image: url('http://sean.mtracey.org/stuff/tonlist/temp/cover.jpeg');
+	background-size: 100%;
+	border-radius: 5px;
+	left: 50%;
+	top: 40%;
+	position: relative;
+	margin-top: 10%;
+	margin-left: -68px;
+	-webkit-transform: translateZ(0);
+	-webkit-perspective: 1000;
+	-webkit-backface-visibility: hidden;
+}
+
+#albumList{
+	width: 100%;
+	height: 230px;
+	background-color: white;
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
+	-webkit-transform: translateZ(0);
+	-webkit-perspective: 1000;
+	-webkit-backface-visibility: hidden;
+}
+
+.zoomOut{
+	-webkit-perspective: 500;
+	-webkit-transform-style: preserve3d;
+	-webkit-transform-origin: 50% 50%;
+	-webkit-transform: scale(0.98);
+	-webkit-transform-origin-x: 50%;
+	-webkit-transform-origin-y: 50%;
+	box-shadow: 0px 3px 5px #000;
+}
+
+#swipeArea{
+	width: 20%;
+	height: 100%;
+	z-index: 1000000;
+/*	background-color: white;*/
+	position: fixed;
+}
