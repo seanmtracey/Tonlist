@@ -230,11 +230,12 @@ nav a{
 }
 
 #nowOnScreen{
-	display: none;
+	display: block;
 	background-color: rgba(59,59,59,1);
 /*	margin-top: 44px;*/
 	height: 100%;
 	z-index: 1000;
+	left: 100%;
 /*	box-shadow: -3px 3px 5px #000;*/
 }
 
@@ -377,8 +378,21 @@ nav a{
 	overflow: scroll;
 	-webkit-overflow-scrolling: touch;
 	-webkit-transform: translateZ(0);
-	-webkit-perspective: 1000;
+/*	-webkit-perspective: 1000;*/
 	-webkit-backface-visibility: hidden;
+}
+
+#albumList li{
+	color: black;
+	padding-bottom: 11px;
+	padding-top: 11px;
+	list-style-type: octal;
+}
+
+.accelerate, .accelerate > *{
+    -webkit-transform: translateZ(0) !important;
+/*    -webkit-perspective: 1000 !important;*/
+    -webkit-backface-visibility: hidden !important;
 }
 
 .zoomOut{

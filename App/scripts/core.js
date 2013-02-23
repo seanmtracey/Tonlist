@@ -1,5 +1,7 @@
 var tonlist = (function(){
 	
+	'use strict';
+	
 	var root = "http://sean.mtracey.org/stuff/tonlist/",
 	path = [],
 	views = [],
@@ -24,10 +26,21 @@ var tonlist = (function(){
 			} else {
 				var route = path[0];
 			}
-			console.log(route);
+			
 			$.ajax({type: "GET", url: root + 'listFiles.php', data: {path: route}, success: createView, error: function(e){console.log(e);}});
 		}
 	}
+	
+	function requestAlbumList(callbackFunction){
+			
+			if(path.length > 1){
+				var route = path.join('/');
+			} else {
+				var route = path[0];
+			}
+			
+			$.ajax({type: "GET", url: root + 'listFiles.php', data: {path: route}, success: callbackFunction, error: function(e){console.log(e);}});
+	};
 	
 	var view = function(data){
 		this.data = data;
@@ -42,25 +55,17 @@ var tonlist = (function(){
 		var viewsLength = views.length;
 		
 		var viewId = "view-" + viewsLength.toString();
-		
-		console.log("MOTO");
-		console.log(viewId);
-		
+
 		if(viewsLength === 0){
-			console.log("Hit");
 			hidePop();	
 		} else {
 			showPop();
 		}
 		
-		console.log(viewId);
-		
 		$('body').append('<div class="view" id="' + viewId + '"></div>')
 		var thisView = $('#' + viewId)
 		
 		this.thisView = thisView;
-		
-		console.log(viewId);
 		
 		for(var i = 0; i < entities.length; i += 1){
 			var thisTitle = entities[i].title;
@@ -71,9 +76,10 @@ var tonlist = (function(){
 			var li = document.createElement("li");
 			li.setAttribute("data-type", thisType);
 			if(thisType == "file") {
-				li.setAttribute("data-filename", entities[i].filename); 
-				li.setAttribute("data-filepath", root + 'music/' + path.join('/') + '/' + entities[i].filename)
-				li.setAttribute("data-artwork", thisCover)
+				li.setAttribute("data-filename", entities[i].filename);
+				li.setAttribute("data-filepath", root + 'music/' + path.join('/') + '/' + entities[i].filename);
+				li.setAttribute("data-artwork", thisCover);
+				li.setAttribute("class", "accelerate");
 			}
 			li.textContent = thisTitle;
 			li.addEventListener("click", (function(e) {
@@ -83,6 +89,7 @@ var tonlist = (function(){
 						pathRequest(this.textContent);
 						break;	
 					case "file":
+
 						$('audio').remove();
 						$('body').append('<audio id="playingFile" src="' + this.getAttribute('data-filepath') + '">');
 						
@@ -107,9 +114,8 @@ var tonlist = (function(){
 			docfrag.appendChild(li)
 			$(thisView).append(docfrag);
 			
-			$('.view').removeClass().addClass('view slideOffToLeft');
+			$('.view:not(#nowOnScreen)').removeClass().addClass('view slideOffToLeft');
 			$(thisView).removeClass().addClass('view slideOnFromRight');
-			
 		}
 	}
 	
@@ -140,13 +146,12 @@ var tonlist = (function(){
 		setTimeout((function(){
 			$(popId).remove();
 		}), 500);
-
+		
 		$(showId).removeClass().addClass('view slideOnFromLeft');
-		console.log(popId);
 		
 		path.pop();
 		views.pop();
-
+		
 	}
 	
 	function hidePop(){
@@ -171,8 +176,81 @@ var tonlist = (function(){
 	}
 		
 	function nowPlaying(){
-		$('#nowOnScreen').show().removeClass().addClass('view slideOnFromRight');
-
+		$('#nowOnScreen').removeClass().addClass('view slideOnFromRight');
+		
+		console.log(path);
+		
+		requestAlbumList(function(e){
+			e = JSON.parse(e);
+			var albumList = e.entries;
+			
+			if(albumList.length > 0){
+			
+				var albumListFragment = document.createDocumentFragment();
+				
+				var ll = 0;
+				
+				console.log(albumListFragment);
+				console.log("===>>><<<===");
+				
+				while(ll < albumList.length){
+					
+					var thisTitle = albumList[ll].title;
+					var thisType = albumList[ll].type;
+					var thisCover = albumList[ll].artwork;
+					
+					var li = document.createElement("li");
+					li.setAttribute("data-filename", albumList[ll].filename);
+					li.setAttribute("data-filepath", root + 'music/' + path.join('/') + '/' + albumList[ll].filename);
+					li.setAttribute("data-artwork", thisCover);
+					
+					li.setAttribute("class", "accelerate");
+					
+					li.textContent = thisTitle;
+					
+					li.addEventListener("click", (function(e) {
+						$('audio').remove();
+						$('body').append('<audio id="playingFile" src="' + this.getAttribute('data-filepath') + '">');
+						
+						$('#loading').show();
+						audioTag = document.getElementById('playingFile');
+						audioTag.addEventListener('canplaythrough', playAudio, false);
+						audioTag.load();
+						
+						setTimeout((function(){
+							audioTag.play();
+						}), 3000);
+						
+						$('#playingFile').attr('src', this.getAttribute("data-filepath"));
+						$('#thisTrack').text(this.innerText);
+						
+						function testThis(){
+							console.log("Yep");
+						};
+						/*
+						var image = new Image();
+						image.onload = function() { // always fires the event.
+							$('#albumCover').css({"background-image" : image });
+							$('#nowPlayingHeader').css({"background-image" : image });
+						};
+						image.src = root + this.getAttribute("data-artwork");
+						*/
+						//$('#albumCover').css({"background-image" : "url('../" + this.getAttribute("data-artwork") + "')"});
+						//$('#nowPlayingHeader').css({"background-image" : "url('images/overlay.png'), url('../" + this.getAttribute("data-artwork") + "')"});
+					}), false);
+					albumListFragment.appendChild(li)
+					
+					ll += 1;
+				}
+				
+				$('#albumList').html(albumListFragment);
+				
+			}
+			
+			console.log(albumList);
+			
+		});
+		
 		hammer.onswipe = function(event){
 			switch (event.direction) {
 				case "right":
@@ -191,7 +269,6 @@ var tonlist = (function(){
 				$('#nowOnScreen').removeClass().addClass('view slideOffToRight');
 				$('#popBtn').off();
 				$('#popBtn').on('click', function(){
-					console.log("Clickthing");
 					tonlist.popView();
 				});
 			});
@@ -204,7 +281,6 @@ var tonlist = (function(){
 			$('#nowOnScreen').removeClass().addClass('view slideOffToRight');
 			$('#popBtn').off();
 			$('#popBtn').on('click', function(){
-				console.log("Clickthing");
 				tonlist.popView();
 			});
 		});
@@ -215,7 +291,6 @@ var tonlist = (function(){
 		if(isPlaying){
 			audioTag.pause();
 			clearInterval(currentPosition);
-			
 			isPlaying = false;
 		} else {
 			audioTag.play();
@@ -224,7 +299,6 @@ var tonlist = (function(){
 				var now = audioTag.currentTime
 				var progress = (now / currentDuration) * 100;
 				$('#progressBar').css({'left' : progress + "%"});
-				//console.log(progress)
 			}), 1000);
 			
 			isPlaying = true;
@@ -232,7 +306,6 @@ var tonlist = (function(){
 	}
 	
 	function handleSwipe(evt){
-		console.log(evt);
 		switch(evt.direction){
 			case "right":
 				tonlist.popView();
@@ -242,7 +315,6 @@ var tonlist = (function(){
 	}
 	
 	var init = (function(){
-		console.log("Hello");
 		pathRequest();
 		$('#popBtn').on('click', function(){
 			alert("POP");
@@ -251,6 +323,7 @@ var tonlist = (function(){
 		hidePop();
 		
 		hammer.onswipe = handleSwipe;
+		
 		window.scrollTo(0, 1);
 	})();
 	
