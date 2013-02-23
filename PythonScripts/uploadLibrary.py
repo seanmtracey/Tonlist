@@ -11,9 +11,9 @@ import parseiTunes
 #Script adapted from http://zephyrfalcon.org/weblog/arch_d7_2003_06_28.html#e262
 
 print "Logging in..."
-root = "/sean.mtracey.org/stuff/tonlist/music"
+root = "SERVER ROOT FOLDER PATH"
 ftp = ftplib.FTP()
-ftp.connect("leah.dreamhost.com", 21)
+ftp.connect("SERVER ADDRESS", 21)
 print ftp.getwelcome()
 try:
     try:
